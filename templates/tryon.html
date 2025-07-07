@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block title %}Thử đồ ảo{% endblock %}
+
+{% block content %}
+<div class="container" data-aos="fade-up">
+    <div class="text-center mb-5">
+        <h2>Thử đồ bằng Công nghệ AI</h2>
+        <p class="lead">Tải lên ảnh của người mẫu và ảnh của trang phục để xem kết quả.</p>
+    </div>
+
+    <form id="tryon-form" action="/submit" method="post" enctype="multipart/form-data">
+        <!-- Input Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">1. Ảnh Người mẫu</h5>
+                        <p class="card-text text-muted">Tải lên ảnh chân dung rõ mặt, chính diện.</p>
+                        <input type="file" class="form-control" name="person_image" id="person_image" accept="image/*" required>
+                        <img id="person-preview" src="#" alt="Xem trước ảnh người mẫu" class="img-fluid mt-3 rounded" style="display:none; max-height: 400px;"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                     <div class="card-body text-center">
+                        <h5 class="card-title">2. Ảnh Trang phục</h5>
+                        <p class="card-text text-muted">Tải lên ảnh trang phục trên nền phẳng, rõ ràng.</p>
+                        <input type="file" class="form-control" name="cloth_image" id="cloth_image" accept="image/*" required>
+                        <img id="cloth-preview" src="#" alt="Xem trước ảnh trang phục" class="img-fluid mt-3 rounded" style="display:none; max-height: 400px;"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center my-4">
+             <button type="submit" class="btn btn-primary btn-lg">Bắt đầu thử đồ</button>
+        </div>
+    </form>
+
+    <hr>
+
+    <!-- Output Row -->
+    <div id="result-section" class="mt-5" style="display:none;">
+        <h2 class="text-center mb-4">Kết quả</h2>
+        <div id="loading-spinner" class="text-center">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Đang xử lý...</span>
+            </div>
+            <p class="mt-2">Đang xử lý AI, quá trình này có thể mất vài phút. Vui lòng không đóng trang.</p>
+        </div>
+        <div id="result-image-container" class="text-center" style="display:none;">
+             <img id="result-image" src="" alt="Kết quả thử đồ" class="img-fluid rounded shadow"/>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Preview images before upload
+    document.getElementById('person_image').onchange = evt => {
+        const [file] = evt.target.files;
+        if (file) {
+            document.getElementById('person-preview').src = URL.createObjectURL(file);
+            document.getElementById('person-preview').style.display = 'block';
+        }
+    };
+    document.getElementById('cloth_image').onchange = evt => {
+        const [file] = evt.target.files;
+        if (file) {
+            document.getElementById('cloth-preview').src = URL.createObjectURL(file);
+            document.getElementById('cloth-preview').style.display = 'block';
+        }
+    };
+
+    // Handle form submission with AJAX
+    document.getElementById('tryon-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('loading-spinner').style.display = 'block';
+        document.getElementById('result-image-container').style.display = 'none';
+
+        const formData = new FormData(this);
+
+        fetch('/submit', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.job_id) {
+                pollForResult(data.job_id);
+            } else {
+                alert('Lỗi: Không thể bắt đầu tác vụ.');
+                document.getElementById('loading-spinner').style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Đã có lỗi xảy ra khi gửi yêu cầu.');
+            document.getElementById('loading-spinner').style.display = 'none';
+        });
+    });
+
+    function pollForResult(jobId) {
+        const interval = setInterval(() => {
+            fetch(`/status/${jobId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'completed') {
+                    clearInterval(interval);
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    document.getElementById('result-image').src = data.result_url;
+                    document.getElementById('result-image-container').style.display = 'block';
+                } else if (data.status === 'failed') {
+                    clearInterval(interval);
+                    alert('Lỗi: Quá trình xử lý AI đã thất bại.');
+                    document.getElementById('loading-spinner').style.display = 'none';
+                }
+                // If 'processing', do nothing and wait for the next poll
+            })
+            .catch(error => {
+                clearInterval(interval);
+                console.error('Error:', error);
+                alert('Đã có lỗi xảy ra khi kiểm tra kết quả.');
+                document.getElementById('loading-spinner').style.display = 'none';
+            });
+        }, 5000); // Poll every 5 seconds
+    }
+</script>
+{% endblock %} 

@@ -1,0 +1,25 @@
+# Base requirements
+torch>=2.1.0
+torchvision>=0.16.0
+gradio
+diffusers
+transformers
+accelerate
+huggingface-hub
+opencv-python
+Pillow
+numpy
+scipy
+
+# Web application
+Flask
+python-dotenv
+Werkzeug
+
+# Optional for performance
+# xformers
+
+# For evaluation
+clean-fid
+torchmetrics
+prettytable

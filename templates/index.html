@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+<style>
+    .hero-section {
+        padding: 6rem 0;
+        background: linear-gradient(to right, #6dd5ed, #2193b0);
+        color: white;
+        text-align: center;
+    }
+    .feature-icon {
+        font-size: 3rem;
+        color: #2193b0;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section text-center">
+    <div class="container" data-aos="fade-up">
+        <h1 class="display-3 fw-bold">Ứng dụng Thử đồ ảo</h1>
+        <p class="lead col-md-8 mx-auto">
+            Một sản phẩm trong khuôn khổ Đồ án Tốt nghiệp tại Học viện Hàng không Việt Nam.
+            Trải nghiệm công nghệ AI tiên tiến cho phép bạn thử trang phục trên người mẫu ảo một cách chân thực.
+        </p>
+        <a href="{{ url_for('tryon_page') }}" class="btn btn-lg btn-light mt-3">Bắt đầu trải nghiệm</a>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container mt-5 py-5">
+    <h2 class="text-center mb-5">Tính năng nổi bật</h2>
+    <div class="row text-center">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-person-bounding-box" viewBox="0 0 16 16"><path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5"/><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/></svg>
+            </div>
+            <h3>Mô hình chân thực</h3>
+            <p>Sử dụng AI để tạo ra hình ảnh người mẫu mặc trang phục một cách tự nhiên và chính xác.</p>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+             <div class="feature-icon mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-magic" viewBox="0 0 16 16"><path d="M9.5 2.672a.5.5 0 1 0 1 0V.843a.5.5 0 0 0-1 0zM11.03.46a.5.5 0 0 0-.707.707l1.293 1.293a.5.5 0 0 0 .707-.707zM13.293 2.707a.5.5 0 0 0 .707-.707l-1.293-1.293a.5.5 0 0 0-.707.707zm-1.83 1.83a.5.5 0 1 0 0-1H10.16a.5.5 0 0 0 0 1zM6.5 2.672a.5.5 0 1 1-1 0V.843a.5.5 0 1 1 1 0zM4.97.46a.5.5 0 0 1 .707.707L4.384 2.46a.5.5 0 0 1-.708-.707zM2.707 2.707a.5.5 0 0 1-.707-.707l1.293-1.293a.5.5 0 1 1 .707.707zM3.66 4.46a.5.5 0 1 1 0-1H4.957a.5.5 0 1 1 0 1zM8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm.354-6.035a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 2 10.5V12h1.5a.5.5 0 0 0 .354-.146l6-6a.5.5 0 0 0 0-.708zM14.5.5a.5.5 0 0 0-.5.5v1.5a.5.5 0 0 0 1 0V1a.5.5 0 0 0-.5-.5M16 3.5a.5.5 0 0 0-.5.5v1.5a.5.5 0 0 0 1 0V4a.5.5 0 0 0-.5-.5m-2.5.5a.5.5 0 0 1 0-1h1.5a.5.5 0 0 1 0 1z"/></svg>
+            </div>
+            <h3>Giao diện hiện đại</h3>
+            <p>Thiết kế trực quan, dễ sử dụng, mang lại trải nghiệm mượt mà cho người dùng.</p>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+             <div class="feature-icon mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-cpu" viewBox="0 0 16 16"><path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0m-.5 3h6a.5.5 0 0 0 .5-.5V2.5a.5.5 0 0 0-1 0V3H5V2.5a.5.5 0 0 0-1 0V3h-.5A1.5 1.5 0 0 0 2 4.5v6A1.5 1.5 0 0 0 3.5 12H4v.5a.5.5 0 0 0 1 0V12h6v.5a.5.5 0 0 0 1 0V12h.5a1.5 1.5 0 0 0 1.5-1.5v-6A1.5 1.5 0 0 0 12.5 3H12V2.5a.5.5 0 0 0-1 0V3h- hükümet merkezi"/></svg>
+            </div>
+            <h3>Xử lý mạnh mẽ</h3>
+            <p>Kiến trúc backend được thiết kế để xử lý các tác vụ AI nặng một cách hiệu quả và không làm treo ứng dụng.</p>
+        </div>
+    </div>
+</div>
+{% endblock %} 
